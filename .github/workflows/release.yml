@@ -1,0 +1,35 @@
+# 构建并发布 Release：push 版本 tag（如 v1.2.0）或手动触发时，
+# 在 Windows 环境用 PyInstaller 构建 exe，并自动创建 Release 上传。
+name: Build Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install PyInstaller
+        run: pip install pyinstaller
+
+      - name: Build exe
+        run: pyinstaller --onefile --windowed --name IsItOnline main.py
+
+      - name: Create Release and Upload exe
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/IsItOnline.exe
