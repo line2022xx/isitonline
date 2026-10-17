@@ -1,0 +1,15 @@
+# Python 字节码
+__pycache__/
+*.py[cod]
+
+# Claude Code 本地设置（个人环境配置，不入库）
+.claude/settings.local.json
+
+# 运行时生成（含用户设备配置与日志，不应入库）
+devices.json
+logs/
+*.tmp
+
+# PyInstaller 构建产物
+build/
+dist/
